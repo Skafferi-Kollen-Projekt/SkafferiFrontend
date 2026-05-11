@@ -1,0 +1,86 @@
+.about {
+  padding: 3rem 1.5rem;
+}
+
+/* Container */
+.about-container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/*Brand Logo */
+.about-image {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2.5rem;
+}
+
+.about-image img {
+  max-width: 320px;
+  width: 100%;
+  height: auto;
+}
+
+/* Title and Texts */
+.about-title {
+  font-size: 2.3rem;
+  margin-bottom: 1.2rem;
+  text-align: center;
+}
+
+.about-text {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: #475569;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+/* Highlights cards */
+.about-highlights {
+  margin-top: 3.5rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+}
+
+.highlight-card {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 1.4rem 1.25rem;
+  text-align: center;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.highlight-card h3 {
+  font-size: 1.15rem;
+  margin-bottom: 0.4rem;
+}
+
+.highlight-card p {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: #475569;
+}
+
+.highlight-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+
+@media (max-width: 640px) {
+  .about {
+    padding: 2rem 1rem;
+  }
+
+  .about-title {
+    font-size: 2rem;
+  }
+
+  .about-text {
+    font-size: 1rem;
+  }
+}
