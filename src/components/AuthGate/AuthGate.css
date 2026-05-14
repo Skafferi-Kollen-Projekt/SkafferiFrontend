@@ -1,0 +1,89 @@
+.authgate-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.45);
+  backdrop-filter: blur(0.75rem);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 1.25rem;
+  z-index: 1000;
+}
+
+.authgate-card {
+  width: 100%;
+  max-width: 28rem;
+  background-color: #ffffff;
+  border-radius: 1rem;
+
+  padding: 1.75rem 1.75rem 1.5rem;
+  position: relative;
+  box-shadow: 0 1.5rem 3rem rgba(0, 0, 0, 0.15);
+}
+
+.authgate-close {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+
+  width: 2.25rem;
+  height: 2.25rem;
+
+  border-radius: 999rem;
+  border: none;
+  background: transparent;
+
+  font-size: 1.4rem;
+  cursor: pointer;
+}
+
+.auth-form {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.auth-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.auth-form label {
+  display: grid;
+  gap: 0.25rem;
+  font-size: 0.9rem;
+}
+
+.auth-form input {
+  padding: 0.7rem;
+  border-radius: 0.6rem;
+  border: 1px solid #cbd5e1;
+}
+
+.auth-primary {
+  margin-top: 0.5rem;
+  padding: 0.8rem;
+  border-radius: 0.7rem;
+
+  background: #2563eb;
+  color: white;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+}
+
+.authgate-switch {
+  margin-top: 1.25rem;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #475569;
+}
+
+.authgate-switch button {
+  background: none;
+  border: none;
+  color: #2563eb;
+  font-weight: 600;
+  cursor: pointer;
+}

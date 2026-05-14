@@ -1,11 +1,15 @@
 import "./Header.css";
 
-export function Header() {
+type HeaderProps = {
+  onLoginClick: () => void;
+};
+
+export function Header({ onLoginClick }: HeaderProps) {
   return (
     <header className="header">
       <nav className="nav">
         <div className="nav-left">
-          <p className="logo"> Skafferi-Kollen</p>
+          <p className="logo">Skafferi-Kollen</p>
         </div>
 
         <ul className="nav-center">
@@ -19,10 +23,11 @@ export function Header() {
             <a href="/contact">Contact</a>
           </li>
         </ul>
+
         <div className="nav-right">
-          <a href="/login" className="login-btn">
+          <button type="button" className="login-btn" onClick={onLoginClick}>
             Login
-          </a>
+          </button>
         </div>
       </nav>
     </header>
