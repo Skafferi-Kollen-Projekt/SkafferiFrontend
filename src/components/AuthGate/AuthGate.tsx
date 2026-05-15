@@ -6,15 +6,19 @@ import { SignUpForm } from "./SignUpForm";
 type AuthGateProps = {
   open: boolean;
   onClose: () => void;
+  onLoginSuccess: () => void; // ✅ rätt namn
 };
 
-export function AuthGate({ open, onClose }: AuthGateProps) {
+export function AuthGate({ open, onClose, onLoginSuccess }: AuthGateProps) {
   const [mode, setMode] = useState<"signin" | "signup">("signin");
+
   useEffect(() => {
     if (!open) return;
+
     const handler = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
     };
+
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
   }, [open, onClose]);
@@ -34,7 +38,12 @@ export function AuthGate({ open, onClose }: AuthGateProps) {
         </button>
 
         {mode === "signin" ? (
-          <SignInForm onSuccess={onClose} />
+          <SignInForm
+            onSuccess={() => {
+              onLoginSuccess();
+              onClose();
+            }}
+          />
         ) : (
           <SignUpForm onSuccess={() => setMode("signin")} />
         )}

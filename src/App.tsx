@@ -74,8 +74,8 @@ function App() {
           open={authOpen}
           onClose={() => {
             setAuthOpen(false);
-            fetchMe();
           }}
+          onLoginSuccess={fetchMe}
         />
       </BrowserRouter>
     </div>

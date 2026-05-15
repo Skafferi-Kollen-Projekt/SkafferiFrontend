@@ -1,9 +1,6 @@
 import "./HomePage.css";
 import { useNavigate } from "react-router-dom";
 
-// ======================
-// ✅ TYP FÖR USER (SAME AS App.tsx)
-// ======================
 type User = {
   id: number;
   firstname: string;
@@ -65,9 +62,6 @@ function Stars({ rating }: { rating: number }) {
 export function HomePage({ user, onAuthRequired }: HomePageProps) {
   const navigate = useNavigate();
 
-  // ======================
-  // ✅ GATED NAVIGATION
-  // ======================
   const goToProtected = (path: string) => {
     if (!user) {
       onAuthRequired();
@@ -112,7 +106,6 @@ export function HomePage({ user, onAuthRequired }: HomePageProps) {
           </button>
         </div>
 
-        {/* ✅ INFO TEXT FÖR EJ INLOGGAD */}
         {!user && (
           <p className="home-auth-hint">
             För att använda funktionerna måste du logga in eller skapa ett
