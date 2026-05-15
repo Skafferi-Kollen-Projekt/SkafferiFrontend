@@ -2,9 +2,10 @@ import "./Header.css";
 
 type HeaderProps = {
   onLoginClick: () => void;
+  isAuthenticated: boolean;
 };
 
-export function Header({ onLoginClick }: HeaderProps) {
+export function Header({ onLoginClick, isAuthenticated }: HeaderProps) {
   return (
     <header className="header">
       <nav className="nav">
@@ -25,9 +26,13 @@ export function Header({ onLoginClick }: HeaderProps) {
         </ul>
 
         <div className="nav-right">
-          <button type="button" className="login-btn" onClick={onLoginClick}>
-            Login
-          </button>
+          {!isAuthenticated ? (
+            <button className="login-btn" onClick={onLoginClick}>
+              Log in / Sign up
+            </button>
+          ) : (
+            <span className="login-btn">Inloggad</span>
+          )}
         </div>
       </nav>
     </header>

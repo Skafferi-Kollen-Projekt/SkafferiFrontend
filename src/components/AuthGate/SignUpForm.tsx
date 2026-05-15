@@ -41,6 +41,9 @@ export function SignUpForm({ onSuccess }: Props) {
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
+    console.log("Submit fired");
+
+    e.preventDefault();
     setFieldErrors({});
     setFormError(null);
     setLoading(true);
@@ -121,7 +124,7 @@ export function SignUpForm({ onSuccess }: Props) {
       </label>
       {formError && <p className="auth-error auth-error--form">{formError}</p>}
 
-      <button type="button" className="auth-primary" disabled={loading}>
+      <button type="submit" className="auth-primary" disabled={loading}>
         {loading ? "Creating account..." : "Create account"}
       </button>
     </form>

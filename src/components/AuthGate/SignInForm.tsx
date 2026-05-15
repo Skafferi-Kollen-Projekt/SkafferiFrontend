@@ -36,7 +36,7 @@ export function SignInForm({ onSuccess }: Props) {
 
     try {
       await loginAccount({ email, password });
-      onSuccess;
+      onSuccess();
     } catch (err) {
       const apiError = err as ApiError;
       setFieldErrors(mapFieldErrors(apiError));
@@ -80,7 +80,7 @@ export function SignInForm({ onSuccess }: Props) {
 
       {formError && <p className="auth-error auth-error--form">{formError}</p>}
 
-      <button type="button" className="auth-primary" disabled={loading}>
+      <button type="submit" className="auth-primary" disabled={loading}>
         {loading ? "Signing in..." : "Sign in"}
       </button>
     </form>

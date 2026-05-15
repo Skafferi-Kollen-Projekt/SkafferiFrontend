@@ -1,9 +1,20 @@
 import "./HomePage.css";
 import { useNavigate } from "react-router-dom";
 
+// ======================
+// ✅ TYP FÖR USER (SAME AS App.tsx)
+// ======================
+type User = {
+  id: number;
+  firstname: string;
+  lastname: string;
+  email: string;
+  role: string;
+};
+
 type HomePageProps = {
-  isLoggedIn?: boolean;
-  onAuthRequired?: () => void;
+  user: User | null;
+  onAuthRequired: () => void;
 };
 
 type Review = {
@@ -20,21 +31,18 @@ const REVIEWS: Review[] = [
     rating: 5,
     text: "Super smidig app! Superenkelt att hålla koll på vad som finns hemma.",
   },
-
   {
     id: 2,
     name: "Daryl Dixon",
     rating: 5,
     text: "Bra app för att organisera matvaror, speciellt när man har mycket att hålla reda på.",
   },
-
   {
     id: 3,
     name: "Michonne",
     rating: 5,
     text: "Fungerar bra för att hålla koll på matvaror. Jag dubbelköper aldrig tack vare den här appen!",
   },
-
   {
     id: 4,
     name: "Glenn Rhee",
@@ -54,15 +62,15 @@ function Stars({ rating }: { rating: number }) {
   );
 }
 
-export function HomePage({
-  isLoggedIn = false,
-  onAuthRequired,
-}: HomePageProps) {
+export function HomePage({ user, onAuthRequired }: HomePageProps) {
   const navigate = useNavigate();
 
+  // ======================
+  // ✅ GATED NAVIGATION
+  // ======================
   const goToProtected = (path: string) => {
-    if (!isLoggedIn) {
-      onAuthRequired?.();
+    if (!user) {
+      onAuthRequired();
       return;
     }
     navigate(path);
@@ -73,10 +81,19 @@ export function HomePage({
       {/* Hero */}
       <header className="home-hero">
         <h1 className="home-title">Skafferi-Kollen</h1>
+
         <p className="home-subtitle">
           Få översikt över dina varor, håll koll på utgångsdatum och minska
           matsvinn.
         </p>
+
+        {/* ✅ WELCOME TEXT */}
+        {user && (
+          <p className="home-welcome">
+            Välkommen {user.firstname} {user.lastname}
+          </p>
+        )}
+
         <div className="home-actions">
           <button
             type="button"
@@ -95,15 +112,16 @@ export function HomePage({
           </button>
         </div>
 
-        {!isLoggedIn && (
+        {/* ✅ INFO TEXT FÖR EJ INLOGGAD */}
+        {!user && (
           <p className="home-auth-hint">
             För att använda funktionerna måste du logga in eller skapa ett
-            konto!.
+            konto.
           </p>
         )}
       </header>
 
-      {/* Features CARDS*/}
+      {/* Features */}
       <section className="feature-section">
         <div className="home-feature">
           <div className="feature-card">
@@ -112,7 +130,7 @@ export function HomePage({
           </div>
 
           <div className="feature-card">
-            <h3>Organisera & förvaring</h3>
+            <h3>Organisera &amp; förvaring</h3>
             <p>
               Organisera efter kylskåp, frys och skafferi för snabb översikt.
             </p>
