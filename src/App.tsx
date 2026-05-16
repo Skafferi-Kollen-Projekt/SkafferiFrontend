@@ -40,6 +40,14 @@ function App() {
     }
   };
 
+  const logout = async () => {
+    await fetch("http://localhost:4000/api/auth/logout", {
+      method: "POST",
+      credentials: "include",
+    });
+    setUser(null);
+  };
+
   useEffect(() => {
     fetchMe();
   }, []);
@@ -50,6 +58,7 @@ function App() {
         <Header
           onLoginClick={() => setAuthOpen(true)}
           isAuthenticated={isAuthenticated}
+          onLogout={logout}
         />
 
         <main className="main">
