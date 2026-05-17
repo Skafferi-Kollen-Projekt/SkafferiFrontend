@@ -1,13 +1,19 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import "./Header.css";
 
 type HeaderProps = {
+  user: {
+    role: string;
+  } | null;
+
   onLoginClick: () => void;
   isAuthenticated: boolean;
   onLogout: () => void;
 };
 
 export function Header({
+  user,
   onLoginClick,
   isAuthenticated,
   onLogout,
@@ -34,14 +40,19 @@ export function Header({
         {/* CENTER – DESKTOP NAV */}
         <ul className="nav-center">
           <li>
-            <a href="/">Hem</a>
+            <Link to="/">Hem</Link>
           </li>
           <li>
-            <a href="/about">Om oss</a>
+            <Link to="/about">Om oss</Link>
           </li>
           <li>
-            <a href="/contact">Kontakt</a>
+            <Link to="/contact">Kontakt</Link>
           </li>
+          {user?.role === "ADMIN" && (
+            <li>
+              <Link to={"/admin/support"}>Support</Link>
+            </li>
+          )}
         </ul>
 
         {/* RIGHT – DESKTOP AUTH */}
@@ -61,20 +72,28 @@ export function Header({
         {open && (
           <ul className="nav-mobile-menu">
             <li>
-              <a href="/" onClick={() => setOpen(false)}>
+              <Link to="/" onClick={() => setOpen(false)}>
                 Hem
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="/about" onClick={() => setOpen(false)}>
+              <Link to="/about" onClick={() => setOpen(false)}>
                 Om oss
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="/contact" onClick={() => setOpen(false)}>
+              <Link to="/contact" onClick={() => setOpen(false)}>
                 Kontakt
-              </a>
+              </Link>
             </li>
+
+            {user?.role === "ADMIN" && (
+              <li>
+                <Link to="/admin/support" onClick={() => setOpen(false)}>
+                  Support
+                </Link>
+              </li>
+            )}
 
             <li className="nav-auth">
               {!isAuthenticated ? (

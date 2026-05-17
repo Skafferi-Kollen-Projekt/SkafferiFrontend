@@ -2,7 +2,7 @@
 import "./App.css";
 
 import { useEffect, useState } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 import { Header } from "./components/Header/Header";
 import { Footer } from "./components/Footer/Footer";
@@ -11,6 +11,7 @@ import { AuthGate } from "./components/AuthGate/AuthGate";
 import { HomePage } from "./pages/HomePage";
 import { AboutPage } from "./pages/AboutPage";
 import { ContactPage } from "./pages/ContactPage";
+import { AdminSupportPage } from "./pages/AdminSupportPage";
 
 type User = {
   id: number;
@@ -22,9 +23,10 @@ type User = {
 
 function App() {
   const [authOpen, setAuthOpen] = useState(false);
-
   const [user, setUser] = useState<User | null>(null);
+
   const isAuthenticated = Boolean(user);
+  const isAdmin = user?.role === "ADMIN";
 
   const fetchMe = async () => {
     try {
@@ -55,6 +57,7 @@ function App() {
     <div className="app">
       <BrowserRouter>
         <Header
+          user= {user}
           onLoginClick={() => setAuthOpen(true)}
           isAuthenticated={isAuthenticated}
           onLogout={logout}
@@ -72,8 +75,14 @@ function App() {
               }
             />
             <Route path="/about" element={<AboutPage />} />
-
             <Route path="/contact" element={<ContactPage />} />
+
+            <Route
+              path="/admin/support"
+              element={
+                isAdmin ? <AdminSupportPage /> : <Navigate to="/" replace />
+              }
+            />
           </Routes>
         </main>
 
