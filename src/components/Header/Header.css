@@ -62,9 +62,9 @@
   color: #18700c;
 }
 
-/* =========================
+/*
    RIGHT – DESKTOP AUTH
-========================= */
+*/
 .login-btn {
   background-color: #2563eb;
   color: #ffffff;
@@ -82,9 +82,7 @@
   background-color: #1d4ed8;
 }
 
-/* =========================
-   HAMBURGER BUTTON
-========================= */
+/* HAMBURGER BUTTON / dropdown*/
 .nav-toggle {
   display: none;
   background: none;

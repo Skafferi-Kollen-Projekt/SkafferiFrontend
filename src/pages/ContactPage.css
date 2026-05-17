@@ -1,0 +1,144 @@
+.contact {
+  padding: 4rem 1rem;
+  display: flex;
+  justify-content: center;
+}
+
+.contact-container {
+  width: 100%;
+  max-width: 44rem;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+/* Header*/
+.contact-header h1 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+}
+
+.contact-header p {
+  max-width: 38rem;
+  color: #475569;
+  line-height: 1.65;
+  font-size: 1.05rem;
+}
+
+/* Form card */
+.contact-form {
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+
+  border-radius: 1.25rem;
+  padding: 2.25rem;
+  box-shadow:
+    0 1.5rem 3rem rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.45);
+
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.contact-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #0f172a;
+}
+
+.contact-form input,
+.contact-form textarea {
+  padding: 0.75rem 0.9rem;
+  border-radius: 0.65rem;
+  border: 1px solid #cbd5e1;
+  font-size: 1rem;
+  background-color: #ffffff;
+}
+
+.contact-form input::placeholder,
+.contact-form textarea::placeholder {
+  color: #94a3b8;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 0.2rem rgba(37, 99, 235, 0.15);
+}
+
+.contact-submit {
+  margin-top: 0.75rem;
+  padding: 0.9rem;
+
+  border-radius: 0.85rem;
+  background-color: #2563eb;
+  color: #ffffff;
+  border: none;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    transform 0.12s ease,
+    box-shadow 0.12s ease;
+}
+
+.contact-submit:hover {
+  background-color: #1d4ed8;
+  box-shadow: 0 0.5rem 1.25rem rgba(37, 99, 235, 0.25);
+}
+
+.contact-submit:active {
+  transform: translateY(1px);
+}
+
+/* Feedback */
+.contact-faq {
+  border-top: 1px solid #e5e7eb;
+  padding-top: 2.5rem;
+}
+
+.contact-faq h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.contact-faq details {
+  padding: 0.85rem 0;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.contact-faq summary {
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.contact-faq p {
+  margin-top: 0.5rem;
+  color: #475569;
+  line-height: 1.6;
+  max-width: 40rem;
+}
+
+/*Responsive*/
+@media (max-width: 48rem) {
+  .contact {
+    padding: 3rem 1rem;
+  }
+
+  .contact-header h1 {
+    font-size: 1.9rem;
+  }
+
+  .contact-form {
+    padding: 1.75rem;
+  }
+}

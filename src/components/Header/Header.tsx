@@ -34,13 +34,13 @@ export function Header({
         {/* CENTER – DESKTOP NAV */}
         <ul className="nav-center">
           <li>
-            <a href="/">Home</a>
+            <a href="/">Hem</a>
           </li>
           <li>
-            <a href="/about">About</a>
+            <a href="/about">Om oss</a>
           </li>
           <li>
-            <a href="/contact">Contact</a>
+            <a href="/contact">Kontakt</a>
           </li>
         </ul>
 
@@ -48,11 +48,11 @@ export function Header({
         <div className="nav-right">
           {!isAuthenticated ? (
             <button className="login-btn" onClick={onLoginClick}>
-              Log in / Sign up
+              Logga in / Registrera
             </button>
           ) : (
             <button className="login-btn" onClick={onLogout}>
-              Logout
+              Logga ut
             </button>
           )}
         </div>
@@ -62,17 +62,17 @@ export function Header({
           <ul className="nav-mobile-menu">
             <li>
               <a href="/" onClick={() => setOpen(false)}>
-                Home
+                Hem
               </a>
             </li>
             <li>
               <a href="/about" onClick={() => setOpen(false)}>
-                About
+                Om oss
               </a>
             </li>
             <li>
               <a href="/contact" onClick={() => setOpen(false)}>
-                Contact
+                Kontakt
               </a>
             </li>
 
@@ -85,7 +85,7 @@ export function Header({
                     onLoginClick();
                   }}
                 >
-                  Log in / Sign up
+                  Logga in / Registrera
                 </button>
               ) : (
                 <button
@@ -95,7 +95,7 @@ export function Header({
                     onLogout();
                   }}
                 >
-                  Logout
+                  Logga ut
                 </button>
               )}
             </li>
