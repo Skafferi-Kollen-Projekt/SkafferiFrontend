@@ -40,7 +40,6 @@ export function Header({
         {/* CENTER – DESKTOP NAV */}
         <ul className="nav-center">
           <li>
-            {" "}
             <Link to="/">Hem</Link>
           </li>
           <li>

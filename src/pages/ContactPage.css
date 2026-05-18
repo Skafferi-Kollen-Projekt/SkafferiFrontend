@@ -41,6 +41,8 @@
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+
+  overflow: hidden;
 }
 
 .contact-form label {
@@ -59,6 +61,12 @@
   border: 1px solid #cbd5e1;
   font-size: 1rem;
   background-color: #ffffff;
+  box-sizing: border-box;
+  max-width: 100%;
+}
+
+.contact-form textarea {
+  resize: vertical;
 }
 
 .contact-form input::placeholder,
@@ -103,6 +111,13 @@
 .contact-faq {
   border-top: 1px solid #e5e7eb;
   padding-top: 2.5rem;
+}
+
+.contact-info {
+  font-size: 0.9rem;
+  color: #475569;
+  line-height: 1.5;
+  margin: -0.5rem 0 0.25rem;
 }
 
 .contact-faq h2 {

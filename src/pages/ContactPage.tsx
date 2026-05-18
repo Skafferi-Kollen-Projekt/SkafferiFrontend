@@ -23,7 +23,7 @@ export function ContactPage() {
       setName("");
       setEmail("");
       setMessage("");
-    } catch (error) {
+    } catch {
       setStatus("error");
     } finally {
       setLoading(false);
@@ -72,6 +72,10 @@ export function ContactPage() {
               required
             />
           </label>
+
+          <p contact-info>
+            🔒 Du behöver vara inloggad för att använda tjänsten.
+          </p>
 
           <button type="submit" className="contact-submit" disabled={loading}>
             {loading ? "Skickar..." : "Skicka meddelande"}
