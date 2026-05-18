@@ -1,0 +1,161 @@
+.profile {
+  max-width: 44rem;
+  margin: 3rem auto;
+  padding: 1rem;
+}
+
+.profile h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+}
+
+.profile-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding: 2rem;
+
+  background: #ffffff;
+  border-radius: 1rem;
+  box-shadow:
+    0 0.75rem 1.5rem rgba(0, 0, 0, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+.profile-form h2 {
+  font-size: 1.4rem;
+  margin-bottom: 0.5rem;
+}
+
+/*Form fields*/
+.profile-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-weight: 500;
+}
+
+.profile-form input {
+  padding: 0.65rem 0.75rem;
+  border-radius: 0.6rem;
+  border: 1px solid #cbd5e1;
+  font-size: 1rem;
+}
+
+.profile-form input:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 0.15rem rgba(37, 99, 235, 0.15);
+}
+
+/*Save Button*/
+.profile-form button {
+  margin-top: 0.75rem;
+  padding: 0.7rem;
+
+  border-radius: 0.7rem;
+  border: none;
+  background-color: #2563eb;
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background-color 0.15s ease,
+    transform 0.1s ease;
+}
+
+.profile-form button:hover {
+  background-color: #1d4ed8;
+}
+
+.profile-form button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/*Feedback text*/
+.success {
+  color: #15803d;
+  font-size: 0.95rem;
+}
+
+.error {
+  color: #b91c1c;
+  font-size: 0.95rem;
+}
+
+.danger-zone {
+  margin-top: 3rem;
+  padding: 2rem;
+  border-radius: 1rem;
+  border: 1px solid #fecaca;
+  background-color: #fff5f5;
+}
+
+.danger-zone h2 {
+  font-size: 1.4rem;
+  color: #b91c1c;
+  margin-bottom: 0.5rem;
+}
+
+.danger-zone p {
+  color: #7f1d1d;
+  margin-bottom: 1rem;
+  line-height: 1.4;
+}
+
+.danger-zone input {
+  width: 100%;
+  padding: 0.65rem 0.75rem;
+  border-radius: 0.6rem;
+  border: 1px solid #fca5a5;
+  margin-bottom: 1rem;
+}
+
+.danger-zone input:focus {
+  outline: none;
+  border-color: #dc2626;
+  box-shadow: 0 0 0 0.15rem rgba(220, 38, 38, 0.2);
+}
+
+/*Delete button*/
+.delete-btn {
+  width: 100%;
+  padding: 0.7rem;
+
+  border-radius: 0.7rem;
+  border: none;
+
+  background-color: #dc2626;
+  color: #ffffff;
+
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background-color 0.15s ease,
+    transform 0.1s ease;
+}
+
+.delete-btn:hover {
+  background-color: #b91c1c;
+}
+
+.delete-btn:disabled {
+  background-color: #fecaca;
+  cursor: not-allowed;
+}
+
+/*Responsive*/
+@media (max-width: 48rem) {
+  .profile {
+    margin: 2rem auto;
+  }
+
+  .profile-form,
+  .danger-zone {
+    padding: 1.5rem;
+  }
+}

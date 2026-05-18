@@ -40,6 +40,7 @@ export function Header({
         {/* CENTER – DESKTOP NAV */}
         <ul className="nav-center">
           <li>
+            {" "}
             <Link to="/">Hem</Link>
           </li>
           <li>
@@ -48,6 +49,13 @@ export function Header({
           <li>
             <Link to="/contact">Kontakt</Link>
           </li>
+
+          {isAuthenticated && (
+            <li>
+              <Link to="/profile">Profil</Link>
+            </li>
+          )}
+
           {user?.role === "ADMIN" && (
             <li>
               <Link to={"/admin/support"}>Support</Link>
@@ -86,6 +94,14 @@ export function Header({
                 Kontakt
               </Link>
             </li>
+
+            {isAuthenticated && (
+              <li>
+                <Link to="/profile" onClick={() => setOpen(false)}>
+                  Profil
+                </Link>
+              </li>
+            )}
 
             {user?.role === "ADMIN" && (
               <li>

@@ -12,6 +12,7 @@ import { HomePage } from "./pages/HomePage";
 import { AboutPage } from "./pages/AboutPage";
 import { ContactPage } from "./pages/ContactPage";
 import { AdminSupportPage } from "./pages/AdminSupportPage";
+import { ProfilePage } from "./pages/ProfilePage";
 
 type User = {
   id: number;
@@ -57,7 +58,7 @@ function App() {
     <div className="app">
       <BrowserRouter>
         <Header
-          user= {user}
+          user={user}
           onLoginClick={() => setAuthOpen(true)}
           isAuthenticated={isAuthenticated}
           onLogout={logout}
@@ -76,7 +77,16 @@ function App() {
             />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/contact" element={<ContactPage />} />
-
+            <Route
+              path="/profile"
+              element={
+                user ? (
+                  <ProfilePage user={user} onLogout={logout} />
+                ) : (
+                  <Navigate to="/" replace />
+                )
+              }
+            ></Route>
             <Route
               path="/admin/support"
               element={
