@@ -81,7 +81,7 @@ function App() {
               path="/profile"
               element={
                 user ? (
-                  <ProfilePage user={user} onLogout={logout} />
+                  <ProfilePage user={user} onLogout={logout} onProfileUpdated={fetchMe}/>
                 ) : (
                   <Navigate to="/" replace />
                 )

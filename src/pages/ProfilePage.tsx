@@ -1,5 +1,5 @@
 import "./ProfilePage.css";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { updateMe, deleteMe } from "../api/user.api";
 import { useNavigate } from "react-router-dom";
 
@@ -12,9 +12,10 @@ type User = {
 type Props = {
   user: User;
   onLogout: () => Promise<void> | void;
+  onProfileUpdated: () => Promise<void> | void;
 };
 
-export function ProfilePage({ user, onLogout }: Props) {
+export function ProfilePage({ user, onLogout, onProfileUpdated }: Props) {
   const navigate = useNavigate();
   const [firstname, setFirstname] = useState(user.firstname);
   const [lastname, setLastname] = useState(user.lastname);
@@ -25,8 +26,11 @@ export function ProfilePage({ user, onLogout }: Props) {
   const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
   const [loading, setLoading] = useState(false);
   const [deleteStatus, setDeleteStatus] = useState<"idle" | "error">("idle");
-  const canDelete =
-    confirmEmail.trim().toLowerCase() === user.email.toLowerCase();
+  const canDelete = confirmEmail.trim() === user.email;
+
+  useEffect(() => {
+    setDeleteStatus("idle");
+  }, [confirmEmail]);
 
   const handleUpdate = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -40,6 +44,7 @@ export function ProfilePage({ user, onLogout }: Props) {
         email,
         password: password || undefined,
       });
+      await onProfileUpdated();
       setPassword("");
       setStatus("success");
     } catch (error) {
