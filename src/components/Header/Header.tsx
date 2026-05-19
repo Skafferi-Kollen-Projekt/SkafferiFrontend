@@ -20,6 +20,16 @@ export function Header({
 }: HeaderProps) {
   const [open, setOpen] = useState(false);
 
+  const [theme, setTheme] = useState<"light" | "dark">(
+    document.documentElement.dataset.theme === "dark" ? "dark" : "light",
+  );
+
+  const toggleTheme = () => {
+    const nextTheme = theme === "light" ? "dark" : "light";
+    document.documentElement.dataset.theme = nextTheme;
+    setTheme(nextTheme);
+  };
+
   return (
     <header className="header">
       <nav className="nav">
@@ -64,6 +74,14 @@ export function Header({
 
         {/* RIGHT – DESKTOP AUTH */}
         <div className="nav-right">
+          <button
+            className="theme-toggle"
+            onClick={toggleTheme}
+            aria-label="Toggle theme"
+          >
+            {theme === "dark" ? "☀️" : "🌙"}
+          </button>
+
           {!isAuthenticated ? (
             <button className="login-btn" onClick={onLoginClick}>
               Logga in / Registrera
