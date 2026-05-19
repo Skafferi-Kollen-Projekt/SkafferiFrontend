@@ -96,6 +96,18 @@ export function Header({
         {/* ✅ MOBILE DROPDOWN MENU (SEPARAT, GLASSY) */}
         {open && (
           <ul className="nav-mobile-menu">
+            <li className="nav-theme-toggle">
+              <button
+                className="theme-toggle"
+                onClick={() => {
+                  toggleTheme();
+                }}
+                aria-label="Toggle theme"
+              >
+                {theme === "dark" ? "☀️ Ljust läge" : "🌙 Mörkt läge"}
+              </button>
+            </li>
+
             <li>
               <Link to="/" onClick={() => setOpen(false)}>
                 Hem

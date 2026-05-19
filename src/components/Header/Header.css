@@ -175,3 +175,34 @@
     font-weight: 500;
   }
 }
+
+@media (max-width: 64rem) {
+  .nav-theme-toggle {
+    width: 100%;
+    padding-bottom: 0.5rem;
+    margin-bottom: 0.5rem;
+
+    border-bottom: 1px solid var(--border);
+
+    display: flex;
+    justify-content: center;
+  }
+
+  .nav-theme-toggle .theme-toggle {
+    font-size: 1rem;
+    font-weight: 500;
+
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.5rem;
+
+    color: var(--text-h);
+  }
+
+  .nav-theme-toggle .theme-toggle:hover {
+    background-color: var(--surface);
+  }
+}
