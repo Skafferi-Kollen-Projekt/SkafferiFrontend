@@ -15,12 +15,13 @@
 .authgate-card {
   width: 100%;
   max-width: 28rem;
-  background-color: #ffffff;
+  background-color: var(--surface);
+  border: var(--border);
   border-radius: 1rem;
 
   padding: 1.75rem 1.75rem 1.5rem;
   position: relative;
-  box-shadow: 0 1.5rem 3rem rgba(0, 0, 0, 0.15);
+  box-shadow: var(--shadow);
 }
 
 .authgate-close {
@@ -37,6 +38,7 @@
 
   font-size: 1.4rem;
   cursor: pointer;
+  color: var(--text-muted);
 }
 
 .auth-form {
@@ -47,18 +49,32 @@
 .auth-title {
   font-size: 1.5rem;
   font-weight: 700;
+  color: var(--text-h);
 }
 
 .auth-form label {
   display: grid;
   gap: 0.25rem;
   font-size: 0.9rem;
+  color: var(--text);
 }
 
 .auth-form input {
   padding: 0.7rem;
   border-radius: 0.6rem;
-  border: 1px solid #cbd5e1;
+  border: 1px solid var(--border);
+  background-color: var(--bg);
+  color: var(--text);
+}
+
+.auth-form input::placeholder {
+  color: var(--text-muted);
+}
+
+.auth-form input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 0.15rem color-mix(in srgb, var(--accent) 30%, transparent);
 }
 
 .auth-primary {
@@ -66,24 +82,32 @@
   padding: 0.8rem;
   border-radius: 0.7rem;
 
-  background: #2563eb;
-  color: white;
+  background: var(--accent);
+  color: var(--text-h);
   font-weight: 600;
   border: none;
   cursor: pointer;
+}
+
+.auth-primary:hover {
+  background-color: var(--accent-hover);
 }
 
 .authgate-switch {
   margin-top: 1.25rem;
   text-align: center;
   font-size: 0.9rem;
-  color: #475569;
+  color: var(--text-muted);
 }
 
 .authgate-switch button {
   background: none;
   border: none;
-  color: #2563eb;
+  color: var(--accent);
   font-weight: 600;
   cursor: pointer;
+}
+
+.authgate-switch button:hover {
+  text-decoration: underline;
 }

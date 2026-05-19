@@ -8,6 +8,7 @@
   font-size: 2rem;
   font-weight: 700;
   margin-bottom: 2rem;
+  color: var(--text-h);
 }
 
 .profile-form {
@@ -16,17 +17,16 @@
   gap: 1.25rem;
   padding: 2rem;
 
-  border: 1px solid #e5e7eb;
-  background: #ffffff;
+  border: 1px solid var(--border);
+  background: var(--surface);
   border-radius: 1rem;
-  box-shadow:
-    0 0.75rem 1.5rem rgba(0, 0, 0, 0.06),
-    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  box-shadow: var(--shadow);
 }
 
 .profile-form h2 {
   font-size: 1.4rem;
   margin-bottom: 0.5rem;
+  color: var(--text-h);
 }
 
 /*Form fields*/
@@ -35,19 +35,27 @@
   flex-direction: column;
   gap: 0.35rem;
   font-weight: 500;
+  color: var(--text);
 }
 
 .profile-form input {
   padding: 0.65rem 0.75rem;
   border-radius: 0.6rem;
-  border: 1px solid #cbd5e1;
+  border: 1px solid var(--border);
   font-size: 1rem;
+
+  background-color: var(--bg);
+  color: var(--text-muted);
+}
+
+.profile-form input::placeholder {
+  color: var(--text);
 }
 
 .profile-form input:focus {
   outline: none;
-  border-color: #2563eb;
-  box-shadow: 0 0 0 0.15rem rgba(37, 99, 235, 0.15);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 0.15rem color-mix(in srgb, var(--accent) 30%, transparent);
 }
 
 /*Save Button*/
@@ -57,8 +65,8 @@
 
   border-radius: 0.7rem;
   border: none;
-  background-color: #2563eb;
-  color: #ffffff;
+  background-color: var(--accent);
+  color: var(--text-h);
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
@@ -68,7 +76,7 @@
 }
 
 .profile-form button:hover {
-  background-color: #1d4ed8;
+  background-color: var(--accent-hover);
 }
 
 .profile-form button:disabled {
@@ -91,19 +99,19 @@
   margin-top: 3rem;
   padding: 2rem;
   border-radius: 1rem;
-  border: 1px solid #fecaca;
-  border-width: 2px;
-  background-color: #fff5f5;
+  border: 1px solid #7f1d1d;
+
+  background-color: color-mix(in srgb, #7f1d1d 20%, var(--surface));
 }
 
 .danger-zone h2 {
   font-size: 1.4rem;
-  color: #b91c1c;
+  color: #fca5a5;
   margin-bottom: 0.5rem;
 }
 
 .danger-zone p {
-  color: #7f1d1d;
+  color: #fecaca;
   margin-bottom: 1rem;
   line-height: 1.4;
 }
@@ -112,14 +120,21 @@
   width: 100%;
   padding: 0.65rem 0.75rem;
   border-radius: 0.6rem;
-  border: 1px solid #fca5a5;
+
+  border: 1px solid #7f1d1d;
+  background-color: var(--bg);
+  color: var(--text);
   margin-bottom: 1rem;
+}
+
+.danger-zone input::placeholder {
+  color: var(--text-muted);
 }
 
 .danger-zone input:focus {
   outline: none;
   border-color: #dc2626;
-  box-shadow: 0 0 0 0.15rem rgba(220, 38, 38, 0.2);
+  box-shadow: 0 0 0 0.15rem rgba(239, 68, 68, 0.3);
 }
 
 /*Delete button*/
@@ -146,7 +161,7 @@
 }
 
 .delete-btn:disabled {
-  background-color: #fecaca;
+  background-color: #7f1d1d;
   cursor: not-allowed;
 }
 
