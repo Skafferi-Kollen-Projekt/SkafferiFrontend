@@ -14,7 +14,7 @@ import { ContactPage } from "./pages/ContactPage";
 import { AdminSupportPage } from "./pages/AdminSupportPage";
 import { ProfilePage } from "./pages/ProfilePage";
 import PantryPage from "./pages/PantryPage";
-//import  PantryNewPage  from "./pages/PantryNewPage";
+import PantryNewPage from "./pages/PantryNewPage";
 type User = {
   id: number;
   firstname: string;
@@ -86,7 +86,7 @@ function App() {
               }
             />
 
-            {/* <Route
+            <Route
               path="/pantry/new"
               element={
                 isAuthenticated ? (
@@ -95,7 +95,7 @@ function App() {
                   <Navigate to="/" replace />
                 )
               }
-            /> */}
+            />
 
             <Route
               path="/profile"

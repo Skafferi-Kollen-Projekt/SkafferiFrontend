@@ -1,0 +1,86 @@
+.pantry-new.page {
+  max-width: 34rem;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
+
+.pantry-new.page h1 {
+  margin-bottom: 0.25rem;
+}
+
+.pantry-new.page p {
+  color: var(--text-muted);
+  margin-bottom: 1.75rem;
+}
+
+/*Form*/
+.pantry-new-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+}
+
+.pantry-new-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.pantry-new-form input,
+.pantry-new-form select {
+  padding: 0.65rem 0.75rem;
+  border-radius: 0.6rem;
+  border: 1px solid var(--border);
+  background-color: var(--surface);
+  color: var(--text);
+  font-size: 0.95rem;
+}
+
+.pantry-new-form input::placeholder {
+  color: var(--text-muted);
+}
+
+.pantry-new-form input:focus,
+.pantry-new-form select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 0.15rem color-mix(in srgb, var(--accent) 30%, transparent);
+}
+
+.toggle-advanced {
+  align-self: flex-start;
+  background: none;
+  border: none;
+  color: var(--accent);
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 0;
+}
+
+.toggle-advanced:hover {
+  text-decoration: underline;
+}
+
+.pantry-new-form .primary-btn {
+  margin-top: 0.75rem;
+  align-self: flex-start;
+}
+
+/*Responsive*/
+@media (max-width: 48rem) {
+  .pantry-new.page {
+    padding: 1.75rem 1rem;
+  }
+
+  .pantry-new-form {
+    gap: 1.25rem;
+  }
+
+  .pantry-new-form .primary-btn {
+    width: 100%;
+    align-self: stretch;
+  }
+}
