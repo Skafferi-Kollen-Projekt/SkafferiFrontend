@@ -9,6 +9,9 @@ type PantryItem = {
   name: string;
   amountStatus: AmountStatus;
   location: StorageLocation;
+  quantity?: number | null;
+  unit?: string | null;
+  expiryDate?: string | null;
   expiryInfo?: {
     daysLeft: number;
     isExpired: boolean;
@@ -26,10 +29,6 @@ type PantryResponse = {
   };
 };
 
-/* =========================
-   STATUS LOGIC
-========================= */
-
 const STATUS_ORDER: AmountStatus[] = ["LOW", "EMPTY", "MEDIUM", "HIGH"];
 
 function getNextStatus(current: AmountStatus): AmountStatus {
@@ -44,9 +43,10 @@ export default function PantryPage() {
   const [hasMore, setHasMore] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  /* =========================
-     FETCH ON LOCATION CHANGE
-  ========================= */
+  const [editingId, setEditingId] = useState<number | null>(null);
+  const [editQuantity, setEditQuantity] = useState<string>("");
+  const [editUnit, setEditUnit] = useState<string>("");
+  const [editExpiryDate, setEditExpiryDate] = useState<string>("");
 
   useEffect(() => {
     setItems([]);
@@ -54,18 +54,16 @@ export default function PantryPage() {
     setHasMore(false);
 
     loadItems(1, true);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location]);
 
   const loadItems = async (pageToLoad: number, replace: boolean) => {
     if (loading) return;
-
     setLoading(true);
 
     const params = new URLSearchParams();
     params.set("page", pageToLoad.toString());
     params.set("limit", "10");
-    params.set("location", location); // ✅ alltid giltigt nu
+    params.set("location", location);
 
     const res = await fetch(
       `http://localhost:4000/api/pantry?${params.toString()}`,
@@ -84,10 +82,6 @@ export default function PantryPage() {
     setHasMore(data.pagination.hasMore);
     setLoading(false);
   };
-
-  /* =========================
-     STATUS UPDATE
-  ========================= */
 
   const updateStatus = async (itemId: number, current: AmountStatus) => {
     const next = getNextStatus(current);
@@ -110,6 +104,65 @@ export default function PantryPage() {
     );
   };
 
+  const startEdit = (item: PantryItem) => {
+    setEditingId(item.id);
+    setEditQuantity(item.quantity?.toString() ?? "");
+    setEditUnit(item.unit ?? "");
+    setEditExpiryDate(item.expiryDate ?? "");
+  };
+
+  const cancelEdit = () => {
+    setEditingId(null);
+    setEditQuantity("");
+    setEditUnit("");
+    setEditExpiryDate("");
+  };
+
+  const saveEdit = async (itemId: number) => {
+    const payload: {
+      quantity?: number;
+      unit?: string;
+      expiryDate?: string;
+    } = {};
+
+    if (editQuantity) {
+      payload.quantity = Number(editQuantity);
+    }
+
+    if (editUnit.trim()) {
+      payload.unit = editUnit.trim();
+    }
+
+    if (editExpiryDate) {
+      payload.expiryDate = editExpiryDate;
+    }
+
+    const res = await fetch(`http://localhost:4000/api/pantry/${itemId}`, {
+      method: "PATCH",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    });
+
+    if (!res.ok) return;
+
+    setItems((prev) =>
+      prev.map((item) =>
+        item.id === itemId
+          ? {
+              ...item,
+              quantity: payload.quantity ?? item.quantity,
+              unit: payload.unit ?? item.unit,
+              expiryDate: payload.expiryDate ?? item.expiryDate,
+            }
+          : item,
+      ),
+    );
+    cancelEdit();
+  };
+
   return (
     <div className="pantry-page">
       <header className="pantry-header">
@@ -117,7 +170,7 @@ export default function PantryPage() {
         <p>Översikt över dina varor</p>
       </header>
 
-      {/* TABS – ENDAST RUM */}
+      {/* TABS */}
       <div className="pantry-tabs">
         {[
           { key: "SKAFFERI", label: "Skafferi" },
@@ -127,11 +180,7 @@ export default function PantryPage() {
           <button
             key={tab.key}
             className={location === tab.key ? "active" : ""}
-            onClick={() => {
-              if (location !== tab.key) {
-                setLocation(tab.key as StorageLocation);
-              }
-            }}
+            onClick={() => setLocation(tab.key as StorageLocation)}
           >
             {tab.label}
           </button>
@@ -155,10 +204,50 @@ export default function PantryPage() {
 
             <div className="pantry-item-meta">
               <span>{item.location}</span>
+
+              {item.quantity && item.unit && (
+                <span>
+                  {item.quantity} {item.unit}
+                </span>
+              )}
+
               {item.expiryInfo?.isExpiringSoon && (
-                <span className="warning">⚠ Utgår snart</span>
+                <span className="warning">
+                  ⚠ {item.expiryInfo.daysLeft} dagar kvar
+                </span>
               )}
             </div>
+
+            {/* INLINE EDIT */}
+            {editingId === item.id ? (
+              <div className="pantry-edit">
+                <input
+                  type="number"
+                  placeholder="Mängd"
+                  value={editQuantity}
+                  onChange={(e) => setEditQuantity(e.target.value)}
+                />
+                <input
+                  type="text"
+                  placeholder="Enhet (st, g, l)"
+                  value={editUnit}
+                  onChange={(e) => setEditUnit(e.target.value)}
+                />
+
+                <input
+                  type="date"
+                  value={editExpiryDate}
+                  onChange={(e) => setEditExpiryDate(e.target.value)}
+                />
+
+                <button onClick={() => saveEdit(item.id)}>Spara</button>
+                <button onClick={cancelEdit}>Avbryt</button>
+              </div>
+            ) : (
+              <button className="edit-btn" onClick={() => startEdit(item)}>
+                Redigera
+              </button>
+            )}
           </li>
         ))}
       </ul>
