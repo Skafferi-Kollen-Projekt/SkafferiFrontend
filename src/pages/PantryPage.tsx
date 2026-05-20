@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import "./PantryPage.css";
 
+/* Types */
+
 type StorageLocation = "SKAFFERI" | "KYLSKÅP" | "FRYS";
 type AmountStatus = "EMPTY" | "LOW" | "MEDIUM" | "HIGH";
 
@@ -29,6 +31,8 @@ type PantryResponse = {
   };
 };
 
+/* Status logic */
+
 const STATUS_ORDER: AmountStatus[] = ["LOW", "EMPTY", "MEDIUM", "HIGH"];
 
 function getNextStatus(current: AmountStatus): AmountStatus {
@@ -43,17 +47,22 @@ export default function PantryPage() {
   const [hasMore, setHasMore] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  /* Inline edit state */
+
   const [editingId, setEditingId] = useState<number | null>(null);
-  const [editQuantity, setEditQuantity] = useState<string>("");
-  const [editUnit, setEditUnit] = useState<string>("");
-  const [editExpiryDate, setEditExpiryDate] = useState<string>("");
+  const [editQuantity, setEditQuantity] = useState("");
+  const [editUnit, setEditUnit] = useState("");
+  const [editExpiryDate, setEditExpiryDate] = useState("");
+  const [editLocation, setEditLocation] = useState<StorageLocation>("SKAFFERI");
+
+  /* Fetch items */
 
   useEffect(() => {
     setItems([]);
     setPage(1);
     setHasMore(false);
-
     loadItems(1, true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location]);
 
   const loadItems = async (pageToLoad: number, replace: boolean) => {
@@ -83,15 +92,15 @@ export default function PantryPage() {
     setLoading(false);
   };
 
+  /* Update status */
+
   const updateStatus = async (itemId: number, current: AmountStatus) => {
     const next = getNextStatus(current);
 
     const res = await fetch(`http://localhost:4000/api/pantry/${itemId}`, {
       method: "PATCH",
       credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ amountStatus: next }),
     });
 
@@ -104,11 +113,14 @@ export default function PantryPage() {
     );
   };
 
+  /* Inline edit handlers */
+
   const startEdit = (item: PantryItem) => {
     setEditingId(item.id);
     setEditQuantity(item.quantity?.toString() ?? "");
     setEditUnit(item.unit ?? "");
     setEditExpiryDate(item.expiryDate ?? "");
+    setEditLocation(item.location);
   };
 
   const cancelEdit = () => {
@@ -123,43 +135,43 @@ export default function PantryPage() {
       quantity?: number;
       unit?: string;
       expiryDate?: string;
+      location?: StorageLocation;
     } = {};
 
-    if (editQuantity) {
-      payload.quantity = Number(editQuantity);
-    }
-
-    if (editUnit.trim()) {
-      payload.unit = editUnit.trim();
-    }
-
-    if (editExpiryDate) {
-      payload.expiryDate = editExpiryDate;
-    }
+    if (editQuantity) payload.quantity = Number(editQuantity);
+    if (editUnit.trim()) payload.unit = editUnit.trim();
+    if (editExpiryDate) payload.expiryDate = editExpiryDate;
+    if (editLocation !== location) payload.location = editLocation;
 
     const res = await fetch(`http://localhost:4000/api/pantry/${itemId}`, {
       method: "PATCH",
       credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
     });
 
     if (!res.ok) return;
 
     setItems((prev) =>
-      prev.map((item) =>
-        item.id === itemId
-          ? {
-              ...item,
-              quantity: payload.quantity ?? item.quantity,
-              unit: payload.unit ?? item.unit,
-              expiryDate: payload.expiryDate ?? item.expiryDate,
-            }
-          : item,
-      ),
+      payload.location && payload.location !== location
+        ? prev.filter((i) => i.id !== itemId)
+        : prev.map((i) => (i.id === itemId ? { ...i, ...payload } : i)),
     );
+
+    cancelEdit();
+  };
+
+  /* Delete item */
+
+  const deleteItem = async (itemId: number) => {
+    const res = await fetch(`http://localhost:4000/api/pantry/${itemId}`, {
+      method: "DELETE",
+      credentials: "include",
+    });
+
+    if (!res.ok) return;
+
+    setItems((prev) => prev.filter((i) => i.id !== itemId));
     cancelEdit();
   };
 
@@ -170,30 +182,23 @@ export default function PantryPage() {
         <p>Översikt över dina varor</p>
       </header>
 
-      {/* TABS */}
       <div className="pantry-tabs">
-        {[
-          { key: "SKAFFERI", label: "Skafferi" },
-          { key: "KYLSKÅP", label: "Kylskåp" },
-          { key: "FRYS", label: "Frys" },
-        ].map((tab) => (
+        {(["SKAFFERI", "KYLSKÅP", "FRYS"] as StorageLocation[]).map((room) => (
           <button
-            key={tab.key}
-            className={location === tab.key ? "active" : ""}
-            onClick={() => setLocation(tab.key as StorageLocation)}
+            key={room}
+            className={location === room ? "active" : ""}
+            onClick={() => setLocation(room)}
           >
-            {tab.label}
+            {room}
           </button>
         ))}
       </div>
 
-      {/* LIST */}
       <ul className="pantry-list">
         {items.map((item) => (
           <li key={item.id} className="pantry-item">
             <div className="pantry-item-main">
               <strong>{item.name}</strong>
-
               <button
                 className={`status ${item.amountStatus.toLowerCase()}`}
                 onClick={() => updateStatus(item.id, item.amountStatus)}
@@ -204,13 +209,11 @@ export default function PantryPage() {
 
             <div className="pantry-item-meta">
               <span>{item.location}</span>
-
               {item.quantity && item.unit && (
                 <span>
                   {item.quantity} {item.unit}
                 </span>
               )}
-
               {item.expiryInfo?.isExpiringSoon && (
                 <span className="warning">
                   ⚠ {item.expiryInfo.daysLeft} dagar kvar
@@ -218,7 +221,6 @@ export default function PantryPage() {
               )}
             </div>
 
-            {/* INLINE EDIT */}
             {editingId === item.id ? (
               <div className="pantry-edit">
                 <input
@@ -229,19 +231,31 @@ export default function PantryPage() {
                 />
                 <input
                   type="text"
-                  placeholder="Enhet (st, g, l)"
+                  placeholder="Enhet"
                   value={editUnit}
                   onChange={(e) => setEditUnit(e.target.value)}
                 />
-
                 <input
                   type="date"
                   value={editExpiryDate}
                   onChange={(e) => setEditExpiryDate(e.target.value)}
                 />
+                <select
+                  value={editLocation}
+                  onChange={(e) =>
+                    setEditLocation(e.target.value as StorageLocation)
+                  }
+                >
+                  <option value="SKAFFERI">Skafferi</option>
+                  <option value="KYLSKÅP">Kylskåp</option>
+                  <option value="FRYS">Frys</option>
+                </select>
 
                 <button onClick={() => saveEdit(item.id)}>Spara</button>
                 <button onClick={cancelEdit}>Avbryt</button>
+                <button className="danger" onClick={() => deleteItem(item.id)}>
+                  Radera
+                </button>
               </div>
             ) : (
               <button className="edit-btn" onClick={() => startEdit(item)}>
@@ -251,20 +265,7 @@ export default function PantryPage() {
           </li>
         ))}
       </ul>
-
-      {!loading && items.length === 0 && (
-        <div className="pantry-empty">
-          <p>Inga varor i detta rum</p>
-        </div>
-      )}
-
-      {hasMore && (
-        <div className="pantry-pagination">
-          <button onClick={() => loadItems(page + 1, false)} disabled={loading}>
-            {loading ? "Laddar..." : "Visa fler"}
-          </button>
-        </div>
-      )}
     </div>
   );
 }
+``;

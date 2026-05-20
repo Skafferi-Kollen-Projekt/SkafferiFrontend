@@ -189,6 +189,30 @@
   cursor: not-allowed;
 }
 
+/* Danger button */
+
+.danger {
+  border: 1px solid var(--border);
+  background-color: var(--surface);
+  color: var(--text);
+}
+
+.danger:hover {
+  background-color: var(--surface-hover, var(--surface));
+}
+
+/* Select */
+
+.pantry-edit select {
+  padding: 0.4rem 0.6rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--border);
+  background-color: var(--surface);
+  color: var(--text);
+  font-size: 0.85rem;
+  background-color: var(--surface);
+}
+
 /* Responsive */
 
 @media (max-width: 48rem) {
