@@ -13,7 +13,8 @@ import { AboutPage } from "./pages/AboutPage";
 import { ContactPage } from "./pages/ContactPage";
 import { AdminSupportPage } from "./pages/AdminSupportPage";
 import { ProfilePage } from "./pages/ProfilePage";
-
+import PantryPage from "./pages/PantryPage";
+//import  PantryNewPage  from "./pages/PantryNewPage";
 type User = {
   id: number;
   firstname: string;
@@ -77,11 +78,34 @@ function App() {
             />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/contact" element={<ContactPage />} />
+
+            <Route
+              path="/pantry"
+              element={
+                isAuthenticated ? <PantryPage /> : <Navigate to="/" replace />
+              }
+            />
+
+            {/* <Route
+              path="/pantry/new"
+              element={
+                isAuthenticated ? (
+                  <PantryNewPage />
+                ) : (
+                  <Navigate to="/" replace />
+                )
+              }
+            /> */}
+
             <Route
               path="/profile"
               element={
                 user ? (
-                  <ProfilePage user={user} onLogout={logout} onProfileUpdated={fetchMe}/>
+                  <ProfilePage
+                    user={user}
+                    onLogout={logout}
+                    onProfileUpdated={fetchMe}
+                  />
                 ) : (
                   <Navigate to="/" replace />
                 )

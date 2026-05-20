@@ -90,7 +90,40 @@ export default function PantryPage() {
         ))}
       </div>
 
-      
+      <ul className="pantry-list">
+        {items.map((item) => (
+          <li key={item.id} className="pantry-item">
+            <div className="pantry-item-main">
+              <strong>{item.name}</strong>
+              <span className={`status ${item.amountStatus.toLowerCase()}`}>
+                {item.amountStatus}
+              </span>
+            </div>
+
+            <div className="pantry-item-meta">
+              <span>{item.location}</span>
+              {item.expiryInfo?.isExpiringSoon && (
+                <span className="warning">⚠ Utgår snart</span>
+              )}
+            </div>
+          </li>
+        ))}
+      </ul>
+
+      {!loading && items.length === 0 && (
+        <div className="pantry-empty">
+          <p>Inga varor här än</p>
+          <p>Lägg till din första vara</p>
+        </div>
+      )}
+
+      {hasMore && (
+        <div className="pantry-pagination">
+          <button onClick={() => loadItems(page + 1)} disabled={loading}>
+            {loading ? "Laddar..." : "Visa fler"}
+          </button>
+        </div>
+      )}
     </div>
   );
 }
