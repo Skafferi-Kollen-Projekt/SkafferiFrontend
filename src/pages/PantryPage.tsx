@@ -54,6 +54,7 @@ export default function PantryPage() {
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [search, setSearch] = useState("");
 
   const motivation =
     MOTIVATION_TEXTS[new Date().getDate() % MOTIVATION_TEXTS.length];
@@ -186,6 +187,10 @@ export default function PantryPage() {
     cancelEdit();
   };
 
+  const filteredItems = items.filter((item) =>
+    item.name.toLowerCase().includes(search.toLowerCase()),
+  );
+
   return (
     <div className="pantry-page">
       <header className="pantry-header">
@@ -196,6 +201,13 @@ export default function PantryPage() {
       <p className="pantry-motivation">🌱 {motivation} </p>
 
       <div className="pantry-tabs">
+        <input
+          type="text"
+          className="pantry-search"
+          placeholder="Sök efter vara..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
         {(["SKAFFERI", "KYLSKÅP", "FRYS"] as StorageLocation[]).map((room) => (
           <button
             key={room}
@@ -208,75 +220,86 @@ export default function PantryPage() {
       </div>
 
       <ul className="pantry-list">
-        {items.map((item) => (
-          <li key={item.id} className="pantry-item">
-            <div className="pantry-item-main">
-              <strong>{item.name}</strong>
-              <button
-                className={`status ${item.amountStatus.toLowerCase()}`}
-                onClick={() => updateStatus(item.id, item.amountStatus)}
-              >
-                {item.amountStatus}
-              </button>
-            </div>
-
-            <div className="pantry-item-meta">
-              <span>{item.location}</span>
-              {item.quantity && item.unit && (
-                <span>
-                  {item.quantity} {item.unit}
-                </span>
-              )}
-              {item.expiryInfo?.isExpiringSoon && (
-                <span className="warning">
-                  ⚠ {item.expiryInfo.daysLeft} dagar kvar
-                </span>
-              )}
-            </div>
-
-            {editingId === item.id ? (
-              <div className="pantry-edit">
-                <input
-                  type="number"
-                  placeholder="Mängd"
-                  value={editQuantity}
-                  onChange={(e) => setEditQuantity(e.target.value)}
-                />
-                <input
-                  type="text"
-                  placeholder="Enhet"
-                  value={editUnit}
-                  onChange={(e) => setEditUnit(e.target.value)}
-                />
-                <input
-                  type="date"
-                  value={editExpiryDate}
-                  onChange={(e) => setEditExpiryDate(e.target.value)}
-                />
-                <select
-                  value={editLocation}
-                  onChange={(e) =>
-                    setEditLocation(e.target.value as StorageLocation)
-                  }
+        {filteredItems.length === 0 && search.trim() !== "" ? (
+          <li className="pantry-item pantry-empty">
+            Ingen vara matchar din sökning.
+          </li>
+        ) : (
+          filteredItems.map((item) => (
+            <li key={item.id} className="pantry-item">
+              <div className="pantry-item-main">
+                <strong>{item.name}</strong>
+                <button
+                  className={`status ${item.amountStatus.toLowerCase()}`}
+                  onClick={() => updateStatus(item.id, item.amountStatus)}
                 >
-                  <option value="SKAFFERI">Skafferi</option>
-                  <option value="KYLSKÅP">Kylskåp</option>
-                  <option value="FRYS">Frys</option>
-                </select>
-
-                <button onClick={() => saveEdit(item.id)}>Spara</button>
-                <button onClick={cancelEdit}>Avbryt</button>
-                <button className="danger" onClick={() => deleteItem(item.id)}>
-                  Radera
+                  {item.amountStatus}
                 </button>
               </div>
-            ) : (
-              <button className="edit-btn" onClick={() => startEdit(item)}>
-                Redigera
-              </button>
-            )}
-          </li>
-        ))}
+
+              <div className="pantry-item-meta">
+                <span>{item.location}</span>
+
+                {item.quantity && item.unit && (
+                  <span>
+                    {item.quantity} {item.unit}
+                  </span>
+                )}
+
+                {item.expiryInfo?.isExpiringSoon && (
+                  <span className="warning">
+                    ⚠ {item.expiryInfo.daysLeft} dagar kvar
+                  </span>
+                )}
+              </div>
+
+              {editingId === item.id ? (
+                <div className="pantry-edit">
+                  <input
+                    type="number"
+                    placeholder="Mängd"
+                    value={editQuantity}
+                    onChange={(e) => setEditQuantity(e.target.value)}
+                  />
+                  <input
+                    type="text"
+                    placeholder="Enhet"
+                    value={editUnit}
+                    onChange={(e) => setEditUnit(e.target.value)}
+                  />
+                  <input
+                    type="date"
+                    value={editExpiryDate}
+                    onChange={(e) => setEditExpiryDate(e.target.value)}
+                  />
+                  <select
+                    value={editLocation}
+                    onChange={(e) =>
+                      setEditLocation(e.target.value as StorageLocation)
+                    }
+                  >
+                    <option value="SKAFFERI">Skafferi</option>
+                    <option value="KYLSKÅP">Kylskåp</option>
+                    <option value="FRYS">Frys</option>
+                  </select>
+
+                  <button onClick={() => saveEdit(item.id)}>Spara</button>
+                  <button onClick={cancelEdit}>Avbryt</button>
+                  <button
+                    className="danger"
+                    onClick={() => deleteItem(item.id)}
+                  >
+                    Radera
+                  </button>
+                </div>
+              ) : (
+                <button className="edit-btn" onClick={() => startEdit(item)}>
+                  Redigera
+                </button>
+              )}
+            </li>
+          ))
+        )}
       </ul>
     </div>
   );
