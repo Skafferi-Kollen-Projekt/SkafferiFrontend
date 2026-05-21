@@ -41,6 +41,10 @@
   color: var(--text-muted);
 }
 
+.authgate-close:hover {
+  color: var(--text);
+}
+
 .auth-form {
   display: grid;
   gap: 0.9rem;
@@ -77,6 +81,80 @@
   box-shadow: 0 0 0 0.15rem color-mix(in srgb, var(--accent) 30%, transparent);
 }
 
+/* Error states */
+
+.auth-input.is-error {
+  border-color: var(--error, #dc2626);
+}
+
+.auth-error {
+  font-size: 0.8rem;
+  color: var(--danger, #dc2626);
+}
+
+.auth-error--form {
+  margin-top: 0.25rem;
+  text-align: center;
+}
+
+/* Show password – STYLED CHECKBOX */
+
+.auth-checkbox {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  cursor: pointer;
+
+  margin-top: 0.25rem;
+}
+
+/* Remove native checkbox look */
+.auth-checkbox input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  width: 1rem;
+  height: 1rem;
+
+  border-radius: 0.25rem;
+  border: 1px solid var(--border);
+  background-color: var(--surface);
+
+  display: grid;
+  place-content: center;
+
+  cursor: pointer;
+}
+
+/* Checkmark */
+.auth-checkbox input[type="checkbox"]::before {
+  content: "";
+  width: 0.55rem;
+  height: 0.55rem;
+  transform: scale(0);
+  transition: transform 0.12s ease-in-out;
+
+  background-color: var(--accent);
+  border-radius: 0.15rem;
+}
+
+/* Checked state */
+.auth-checkbox input[type="checkbox"]:checked::before {
+  transform: scale(1);
+}
+
+/* Focus ring */
+.auth-checkbox input[type="checkbox"]:focus {
+  outline: none;
+  box-shadow: 0 0 0 0.15rem color-mix(in srgb, var(--accent) 30%, transparent);
+}
+
+/* Primary button */
+
 .auth-primary {
   margin-top: 0.5rem;
   padding: 0.8rem;
@@ -92,6 +170,13 @@
 .auth-primary:hover {
   background-color: var(--accent-hover);
 }
+
+.auth-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Switch sign in / sign up */
 
 .authgate-switch {
   margin-top: 1.25rem;
@@ -110,4 +195,16 @@
 
 .authgate-switch button:hover {
   text-decoration: underline;
+}
+
+/* Responsive */
+
+@media (max-width: 40rem) {
+  .authgate-card {
+    padding: 1.5rem 1.25rem 1.25rem;
+  }
+
+  .auth-title {
+    font-size: 1.35rem;
+  }
 }

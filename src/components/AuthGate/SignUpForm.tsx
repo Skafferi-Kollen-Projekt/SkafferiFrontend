@@ -14,7 +14,6 @@ function mapFieldErrors(error: ApiError): FieldErrors {
 
   for (const d of error.details) {
     const field = normalizeFieldPath(d.path);
-
     if (
       field === "firstname" ||
       field === "lastname" ||
@@ -34,6 +33,7 @@ export function SignUpForm({ onSuccess }: Props) {
   const [lastname, setLastname] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
   const [formError, setFormError] = useState<string | null>(null);
@@ -41,22 +41,16 @@ export function SignUpForm({ onSuccess }: Props) {
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Submit fired");
-
-    e.preventDefault();
     setFieldErrors({});
     setFormError(null);
     setLoading(true);
 
     try {
       await registerAccount({ firstname, lastname, email, password });
-
       onSuccess();
     } catch (err) {
       const apiError = err as ApiError;
-
       setFieldErrors(mapFieldErrors(apiError));
-
       setFormError(apiError.message ?? "Could not create account");
     } finally {
       setLoading(false);
@@ -71,7 +65,7 @@ export function SignUpForm({ onSuccess }: Props) {
         First name
         <input
           ref={firstNameRef}
-          className={'auth-input ${fieldErrors.firstname ? "is-error" : ""}'}
+          className={`auth-input ${fieldErrors.firstname ? "is-error" : ""}`}
           value={firstname}
           onChange={(e) => setFirstname(e.target.value)}
           required
@@ -85,7 +79,7 @@ export function SignUpForm({ onSuccess }: Props) {
       <label className="auth-label">
         Last name
         <input
-          className={'auth-input ${fieldErrors.lastname ? "is-error" : ""}'}
+          className={`auth-input ${fieldErrors.lastname ? "is-error" : ""}`}
           value={lastname}
           onChange={(e) => setLastname(e.target.value)}
           required
@@ -99,7 +93,7 @@ export function SignUpForm({ onSuccess }: Props) {
       <label className="auth-label">
         Email
         <input
-          className={'auth-input ${fieldErrors.email ? "is-error" : ""}'}
+          className={`auth-input ${fieldErrors.email ? "is-error" : ""}`}
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
@@ -111,17 +105,26 @@ export function SignUpForm({ onSuccess }: Props) {
       <label className="auth-label">
         Password
         <input
-          className={'auth-input ${fieldErrors.password ? "is-error" : ""}'}
-          type="password"
+          className={`auth-input ${fieldErrors.password ? "is-error" : ""}`}
+          type={showPassword ? "text" : "password"}
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
           minLength={8}
         />
+        <label className="auth-checkbox">
+          <input
+            type="checkbox"
+            checked={showPassword}
+            onChange={(e) => setShowPassword(e.target.checked)}
+          />
+          Show password
+        </label>
         {fieldErrors.password && (
           <p className="auth-error">{fieldErrors.password}</p>
         )}
       </label>
+
       {formError && <p className="auth-error auth-error--form">{formError}</p>}
 
       <button type="submit" className="auth-primary" disabled={loading}>

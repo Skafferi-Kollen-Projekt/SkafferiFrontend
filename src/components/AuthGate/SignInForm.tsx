@@ -23,6 +23,7 @@ export function SignInForm({ onSuccess }: Props) {
   const emailRef = useRef<HTMLInputElement>(null);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
   const [formError, setFormError] = useState<string | null>(null);
@@ -40,7 +41,6 @@ export function SignInForm({ onSuccess }: Props) {
     } catch (err) {
       const apiError = err as ApiError;
       setFieldErrors(mapFieldErrors(apiError));
-
       setFormError(apiError.message ?? "Invalid email or password");
     } finally {
       setLoading(false);
@@ -55,7 +55,7 @@ export function SignInForm({ onSuccess }: Props) {
         Email
         <input
           ref={emailRef}
-          className={'auth-input ${fieldErrors.email ? "is-error" : ""}'}
+          className={`auth-input ${fieldErrors.email ? "is-error" : ""}`}
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
@@ -67,12 +67,20 @@ export function SignInForm({ onSuccess }: Props) {
       <label className="auth-label">
         Password
         <input
-          className={'auth-input ${fieldErrors.password ? "is-error" : ""}'}
-          type="password"
+          className={`auth-input ${fieldErrors.password ? "is-error" : ""}`}
+          type={showPassword ? "text" : "password"}
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
         />
+        <label className="auth-checkbox">
+          <input
+            type="checkbox"
+            checked={showPassword}
+            onChange={(e) => setShowPassword(e.target.checked)}
+          />
+          Show password
+        </label>
         {fieldErrors.password && (
           <p className="auth-error">{fieldErrors.password}</p>
         )}
