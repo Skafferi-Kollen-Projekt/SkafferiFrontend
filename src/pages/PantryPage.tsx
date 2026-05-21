@@ -40,12 +40,23 @@ function getNextStatus(current: AmountStatus): AmountStatus {
   return STATUS_ORDER[(index + 1) % STATUS_ORDER.length];
 }
 
+const MOTIVATION_TEXTS = [
+  "Små uppdateringar i skafferiet kan spara både pengar och matsvinn.",
+  "Det som syns blir oftare använt – och mindre hamnar i soporna.",
+  "En minut extra här kan spara ett onödigt köp senare.",
+  "Bra koll på skafferiet gör vardagen billigare och enklare.",
+  "Att hålla koll på maten är ett av de enklaste sätten att spara pengar.",
+];
+
 export default function PantryPage() {
   const [items, setItems] = useState<PantryItem[]>([]);
   const [location, setLocation] = useState<StorageLocation>("SKAFFERI");
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  const motivation =
+    MOTIVATION_TEXTS[new Date().getDate() % MOTIVATION_TEXTS.length];
 
   /* Inline edit state */
 
@@ -181,6 +192,8 @@ export default function PantryPage() {
         <h1>Ditt skafferi</h1>
         <p>Översikt över dina varor</p>
       </header>
+
+      <p className="pantry-motivation">🌱 {motivation} </p>
 
       <div className="pantry-tabs">
         {(["SKAFFERI", "KYLSKÅP", "FRYS"] as StorageLocation[]).map((room) => (

@@ -1,4 +1,4 @@
-/* PANTRY PAGE */
+/* Pantry page */
 
 .pantry-page {
   max-width: 48rem;
@@ -10,11 +10,22 @@
 
 .pantry-header h1 {
   margin-bottom: 0.25rem;
+  color: var(--text-h);
 }
 
 .pantry-header p {
   color: var(--text-muted);
-  margin-bottom: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Motivation text */
+
+.pantry-motivation {
+  margin: 0.25rem 0 1.25rem;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+  max-width: 40rem;
 }
 
 /* Tabs */
@@ -30,14 +41,14 @@
   padding: 0.4rem 0.8rem;
   border-radius: 0.5rem;
   border: 1px solid var(--border);
-  background-color: var(--surface);
+  background: var(--surface);
   color: var(--text);
   cursor: pointer;
   font-size: 0.9rem;
 }
 
 .pantry-tabs button.active {
-  background-color: var(--accent);
+  background: var(--accent);
   color: var(--text-h);
   border-color: var(--accent);
 }
@@ -47,7 +58,6 @@
 .pantry-list {
   list-style: none;
   padding: 0;
-  margin: 0;
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
@@ -55,12 +65,10 @@
 
 .pantry-item {
   border: 1px solid var(--border);
-  background-color: var(--surface);
+  background: var(--surface);
   border-radius: 0.75rem;
   padding: 0.75rem;
 }
-
-/* Top row */
 
 .pantry-item-main {
   display: flex;
@@ -68,47 +76,45 @@
   align-items: center;
 }
 
-/* Status badge (clickable) */
+/* Status badge */
 
 .status {
+  font-size: 0.75rem;
+  padding: 0.15rem 0.4rem;
+  border-radius: 0.4rem;
   border: none;
   cursor: pointer;
-  font-size: 0.75rem;
-  font-weight: 500;
-  padding: 0.2rem 0.45rem;
-  border-radius: 0.4rem;
-  transition: background-color 0.15s ease;
 }
 
 .status.low,
 .status.empty {
-  background-color: #fecaca;
+  background: #fecaca;
   color: #7f1d1d;
 }
 
 .status.medium {
-  background-color: #fde68a;
+  background: #fde68a;
   color: #78350f;
 }
 
 .status.high {
-  background-color: #bbf7d0;
+  background: #bbf7d0;
   color: #14532d;
 }
 
 /* Meta info */
 
 .pantry-item-meta {
-  margin-top: 0.3rem;
   font-size: 0.8rem;
   color: var(--text-muted);
   display: flex;
   gap: 0.75rem;
+  margin-top: 0.25rem;
   flex-wrap: wrap;
 }
 
 .warning {
-  color: var(--warning, #dc2626);
+  color: var(--danger, #dc2626);
 }
 
 /* Inline edit */
@@ -120,11 +126,12 @@
   flex-wrap: wrap;
 }
 
-.pantry-edit input {
+.pantry-edit input,
+.pantry-edit select {
   padding: 0.4rem 0.6rem;
   border-radius: 0.5rem;
   border: 1px solid var(--border);
-  background-color: var(--surface);
+  background: var(--surface);
   color: var(--text);
   font-size: 0.85rem;
 }
@@ -133,17 +140,17 @@
   padding: 0.4rem 0.6rem;
   border-radius: 0.5rem;
   border: 1px solid var(--border);
-  background-color: var(--surface);
+  background: var(--surface);
   color: var(--text);
   font-size: 0.8rem;
   cursor: pointer;
 }
 
 .pantry-edit button:hover {
-  background-color: var(--surface-hover, var(--surface));
+  background: var(--surface-hover, var(--surface));
 }
 
-/* Edit button */
+/* Action buttons */
 
 .edit-btn {
   margin-top: 0.5rem;
@@ -159,58 +166,8 @@
   text-decoration: underline;
 }
 
-/* Empty state */
-
-.pantry-empty {
-  margin-top: 2rem;
-  text-align: center;
-  color: var(--text-muted);
-  font-size: 0.9rem;
-}
-
-/* Pagination */
-
-.pantry-pagination {
-  margin-top: 1.5rem;
-  text-align: center;
-}
-
-.pantry-pagination button {
-  padding: 0.5rem 1rem;
-  border-radius: 0.6rem;
-  border: 1px solid var(--border);
-  background-color: var(--surface);
-  color: var(--text);
-  cursor: pointer;
-}
-
-.pantry-pagination button:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-
-/* Danger button */
-
 .danger {
-  border: 1px solid var(--border);
-  background-color: var(--surface);
-  color: var(--text);
-}
-
-.danger:hover {
-  background-color: var(--surface-hover, var(--surface));
-}
-
-/* Select */
-
-.pantry-edit select {
-  padding: 0.4rem 0.6rem;
-  border-radius: 0.5rem;
-  border: 1px solid var(--border);
-  background-color: var(--surface);
-  color: var(--text);
-  font-size: 0.85rem;
-  background-color: var(--surface);
+  color: var(--danger, #dc2626);
 }
 
 /* Responsive */
@@ -223,10 +180,6 @@
   .pantry-item-main {
     flex-direction: column;
     align-items: flex-start;
-    gap: 0.4rem;
-  }
-
-  .pantry-edit {
     gap: 0.4rem;
   }
 }
