@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./PantryPage.css";
 
 /* Types */
@@ -55,6 +56,7 @@ export default function PantryPage() {
   const [hasMore, setHasMore] = useState(false);
   const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState("");
+  const navigate = useNavigate();
 
   const motivation =
     MOTIVATION_TEXTS[new Date().getDate() % MOTIVATION_TEXTS.length];
@@ -199,6 +201,10 @@ export default function PantryPage() {
       </header>
 
       <p className="pantry-motivation">🌱 {motivation} </p>
+
+      <button className="edit-btn" onClick={() => navigate("/pantry/new")}>
+        + Lägg till vara
+      </button>
 
       <div className="pantry-tabs">
         <input

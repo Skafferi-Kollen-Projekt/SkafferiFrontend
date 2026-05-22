@@ -15,7 +15,7 @@
 
 .pantry-header p {
   color: var(--text-muted);
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.75rem;
 }
 
 /* Motivation text */
@@ -28,29 +28,50 @@
   max-width: 40rem;
 }
 
-/* Tabs */
+/* Tabs (rooms) */
 
 .pantry-tabs {
   display: flex;
   gap: 0.5rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.25rem;
   flex-wrap: wrap;
 }
 
 .pantry-tabs button {
-  padding: 0.4rem 0.8rem;
-  border-radius: 0.5rem;
+  padding: 0.4rem 0.9rem;
+  border-radius: 0.6rem;
   border: 1px solid var(--border);
   background: var(--surface);
   color: var(--text);
   cursor: pointer;
   font-size: 0.9rem;
+  transition: background-color 0.15s ease;
 }
 
 .pantry-tabs button.active {
   background: var(--accent);
   color: var(--text-h);
   border-color: var(--accent);
+}
+
+/* Search */
+
+.pantry-search {
+  width: 100%;
+  max-width: 20rem;
+  padding: 0.5rem 0.6rem;
+  margin-bottom: 1rem;
+
+  border-radius: 0.5rem;
+  border: 1px solid var(--border);
+
+  background: var(--surface);
+  color: var(--text);
+  font-size: 0.9rem;
+}
+
+.pantry-search::placeholder {
+  color: var(--text-muted);
 }
 
 /* List */
@@ -63,27 +84,38 @@
   gap: 0.75rem;
 }
 
+/* Item card */
+
 .pantry-item {
   border: 1px solid var(--border);
   background: var(--surface);
   border-radius: 0.75rem;
-  padding: 0.75rem;
+  padding: 0.85rem;
 }
+
+/* Item header */
 
 .pantry-item-main {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 0.75rem;
+}
+
+.pantry-item-main strong {
+  font-weight: 600;
+  color: var(--text-h);
 }
 
 /* Status badge */
 
 .status {
-  font-size: 0.75rem;
-  padding: 0.15rem 0.4rem;
-  border-radius: 0.4rem;
+  font-size: 0.7rem;
+  padding: 0.2rem 0.45rem;
+  border-radius: 0.45rem;
   border: none;
   cursor: pointer;
+  font-weight: 600;
 }
 
 .status.low,
@@ -109,12 +141,22 @@
   color: var(--text-muted);
   display: flex;
   gap: 0.75rem;
-  margin-top: 0.25rem;
+  margin-top: 0.35rem;
   flex-wrap: wrap;
 }
 
 .warning {
   color: var(--danger, #dc2626);
+  font-weight: 500;
+}
+
+/* Empty search result */
+
+.pantry-empty {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  padding: 0.75rem 0;
 }
 
 /* Inline edit */
@@ -128,16 +170,17 @@
 
 .pantry-edit input,
 .pantry-edit select {
-  padding: 0.4rem 0.6rem;
+  padding: 0.45rem 0.6rem;
   border-radius: 0.5rem;
   border: 1px solid var(--border);
   background: var(--surface);
   color: var(--text);
   font-size: 0.85rem;
+  min-width: 7rem;
 }
 
 .pantry-edit button {
-  padding: 0.4rem 0.6rem;
+  padding: 0.45rem 0.7rem;
   border-radius: 0.5rem;
   border: 1px solid var(--border);
   background: var(--surface);
@@ -154,16 +197,35 @@
 
 .edit-btn {
   margin-top: 0.5rem;
-  background: none;
-  border: none;
+  padding: 0.35rem 0.65rem;
+
+  border-radius: 0.45rem;
+  border: 1px solid var(--border);
+
+  background: transparent;
   color: var(--accent);
+
   font-size: 0.8rem;
+  font-weight: 500;
   cursor: pointer;
-  padding: 0;
+
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease;
 }
 
 .edit-btn:hover {
-  text-decoration: underline;
+  background-color: var(--surface-hover, var(--surface));
+  border-color: var(--accent);
+}
+
+.edit-btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 0.15rem color-mix(in srgb, var(--accent) 30%, transparent);
+}
+
+.pantry-page > .edit-btn {
+  margin-bottom: 1rem;
 }
 
 .danger {
@@ -181,5 +243,9 @@
     flex-direction: column;
     align-items: flex-start;
     gap: 0.4rem;
+  }
+
+  .pantry-search {
+    max-width: 100%;
   }
 }

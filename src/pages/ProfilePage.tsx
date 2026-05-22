@@ -38,12 +38,20 @@ export function ProfilePage({ user, onLogout, onProfileUpdated }: Props) {
     setStatus("idle");
 
     try {
-      await updateMe({
+      const data = await updateMe({
         firstname,
         lastname,
         email,
         password: password || undefined,
       });
+
+      if (data?.message === "EMAIL_CHANGED_LOGOUT_REQUIRED") {
+        alert("Du behöver logga in igen efter att ha ändrat email.");
+        await onLogout();
+        navigate("/login");
+        return;
+      }
+
       await onProfileUpdated();
       setPassword("");
       setStatus("success");
@@ -97,6 +105,8 @@ export function ProfilePage({ user, onLogout, onProfileUpdated }: Props) {
             onChange={(e) => setEmail(e.target.value)}
           />
         </label>
+
+        <p className="hint">Om du ändrar din email behöver du logga in igen.</p>
 
         <label>
           Nytt lösenord:
