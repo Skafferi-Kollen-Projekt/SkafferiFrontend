@@ -307,6 +307,17 @@ export default function PantryPage() {
           ))
         )}
       </ul>
+      {hasMore && (
+        <div style={{ textAlign: "center", marginTop: "1rem" }}>
+          <button
+            className="edit-btn"
+            disabled={loading}
+            onClick={() => loadItems(page + 1, false)}
+          >
+            {loading ? "Laddar..." : "Visa fler"}
+          </button>
+        </div>
+      )}
     </div>
   );
 }

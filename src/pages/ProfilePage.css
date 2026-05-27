@@ -101,17 +101,17 @@
   border-radius: 1rem;
   border: 1px solid #7f1d1d;
 
-  background-color: color-mix(in srgb, #7f1d1d 20%, var(--surface));
+  background-color: color-mix(in srgb, #7f1d1d 12%, var(--surface));
 }
 
 .danger-zone h2 {
   font-size: 1.4rem;
-  color: #fca5a5;
+  color: #7f1d1d;
   margin-bottom: 0.5rem;
 }
 
 .danger-zone p {
-  color: #fecaca;
+  color: var(--text);
   margin-bottom: 1rem;
   line-height: 1.4;
 }
@@ -172,6 +172,18 @@
   color: var(--text-muted);
   margin-top: -0.25rem;
   line-height: 1.3;
+}
+
+/* Info message */
+
+.info {
+  margin-top: 1rem;
+  padding: 0.75rem 1rem;
+  border-radius: 0.6rem;
+  border: 1px solid var(--border);
+  background-color: var(--surface-hover, var(--surface));
+  color: var(--text);
+  font-size: 0.9rem;
 }
 
 /*Responsive*/

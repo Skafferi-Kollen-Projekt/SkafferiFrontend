@@ -27,6 +27,7 @@ export function ProfilePage({ user, onLogout, onProfileUpdated }: Props) {
   const [loading, setLoading] = useState(false);
   const [deleteStatus, setDeleteStatus] = useState<"idle" | "error">("idle");
   const canDelete = confirmEmail.trim() === user.email;
+  const [logoutNotice, setLogoutNotice] = useState<string | null>(null);
 
   useEffect(() => {
     setDeleteStatus("idle");
@@ -46,9 +47,12 @@ export function ProfilePage({ user, onLogout, onProfileUpdated }: Props) {
       });
 
       if (data?.message === "EMAIL_CHANGED_LOGOUT_REQUIRED") {
-        alert("Du behöver logga in igen efter att ha ändrat email.");
-        await onLogout();
-        navigate("/login");
+        setLogoutNotice("Email ändrad. Du måste logga in igen.");
+
+        setTimeout(async () => {
+          await onLogout();
+          navigate("/");
+        }, 2500);
         return;
       }
 
@@ -120,6 +124,8 @@ export function ProfilePage({ user, onLogout, onProfileUpdated }: Props) {
         <button disabled={loading}>
           {loading ? "Sparar..." : "Spara ändringar"}
         </button>
+
+        {logoutNotice && <p className="info">{logoutNotice}</p>}
 
         {status === "success" && (
           <p className="success">Profil uppdaterad ✅</p>
