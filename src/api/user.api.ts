@@ -1,5 +1,3 @@
-const API_BASE = `${import.meta.env.VITE_API_URL}/api`;
-
 type UpdateMePayload = {
   firstname?: string;
   lastname?: string;
@@ -8,7 +6,7 @@ type UpdateMePayload = {
 };
 
 export const updateMe = async (data: UpdateMePayload) => {
-  const res = await fetch(`${API_BASE}/users/me`, {
+  const res = await fetch("http://localhost:4000/api/users/me", {
     method: "PATCH",
     credentials: "include",
     headers: {
@@ -26,7 +24,7 @@ export const updateMe = async (data: UpdateMePayload) => {
 };
 
 export const deleteMe = async (email: string) => {
-  const res = await fetch(`${API_BASE}/users/me`, {
+  const res = await fetch("http://localhost:4000/api/users/me", {
     method: "DELETE",
     credentials: "include",
     headers: {
