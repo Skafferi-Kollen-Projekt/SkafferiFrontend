@@ -1,3 +1,5 @@
+const API_BASE = `${import.meta.env.VITE_API_URL}/api`;
+
 export type SupportMessage = {
   id: number;
   message: string;
@@ -8,7 +10,7 @@ export type SupportMessage = {
 };
 
 export const createSupportMessage = async (message: string) => {
-  const res = await fetch("http://localhost:4000/api/support", {
+  const res = await fetch(`${API_BASE}/support`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -28,7 +30,7 @@ export const createSupportMessage = async (message: string) => {
 export const getSupportMessagesForAdmin = async (): Promise<
   SupportMessage[]
 > => {
-  const res = await fetch("http://localhost:4000/api/support/admin", {
+  const res = await fetch(`${API_BASE}/support/admin`, {
     method: "GET",
     credentials: "include",
   });
