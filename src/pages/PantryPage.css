@@ -146,8 +146,19 @@
 }
 
 .warning {
-  color: var(--danger, #dc2626);
-  font-weight: 500;
+  font-size: 0.8rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.warning.warning-danger {
+  color: #b91c1c;
+}
+
+.warning.warning-warning {
+  color: #ca8a04;
 }
 
 /* Empty search result */

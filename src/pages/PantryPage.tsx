@@ -49,6 +49,26 @@ const MOTIVATION_TEXTS = [
   "Att hålla koll på maten är ett av de enklaste sätten att spara pengar.",
 ];
 
+function calculateExpiryInfo(expiryDate?: string | null) {
+  if (!expiryDate) return null;
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const expiry = new Date(expiryDate);
+  expiry.setHours(0, 0, 0, 0);
+
+  const diffTime = expiry.getTime() - today.getTime();
+  const daysLeft = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+  return {
+    daysLeft,
+    isExpired: daysLeft < 0,
+    isExpiringSoon: daysLeft >= 0 && daysLeft <= 2,
+    isWarning: daysLeft >= 0 && daysLeft <= 5,
+  };
+}
+
 export default function PantryPage() {
   const [items, setItems] = useState<PantryItem[]>([]);
   const [location, setLocation] = useState<StorageLocation>("SKAFFERI");
@@ -166,14 +186,25 @@ export default function PantryPage() {
 
     if (!res.ok) return;
 
-    setItems((prev) =>
-      payload.location && payload.location !== location
-        ? prev.filter((i) => i.id !== itemId)
-        : prev.map((i) => (i.id === itemId ? { ...i, ...payload } : i)),
-    );
+    await loadItems(1, true);
 
     cancelEdit();
   };
+
+  useEffect(() => {
+    const interval = setInterval(
+      () => {
+        setItems((prev) =>
+          prev.map((item) => ({
+            ...item,
+            expiryInfo: calculateExpiryInfo(item.expiryDate),
+          })),
+        );
+      },
+      60 * 60 * 1000,
+    );
+    return () => clearInterval(interval);
+  }, []);
 
   /* Delete item */
 
@@ -185,7 +216,7 @@ export default function PantryPage() {
 
     if (!res.ok) return;
 
-    setItems((prev) => prev.filter((i) => i.id !== itemId));
+    await loadItems(1, true);
     cancelEdit();
   };
 
@@ -245,18 +276,23 @@ export default function PantryPage() {
 
               <div className="pantry-item-meta">
                 <span>{item.location}</span>
-
                 {item.quantity && item.unit && (
                   <span>
                     {item.quantity} {item.unit}
                   </span>
                 )}
-
                 {item.expiryInfo?.isExpiringSoon && (
-                  <span className="warning">
-                    ⚠ {item.expiryInfo.daysLeft} dagar kvar
+                  <span className="warning warning-danger">
+                    🔴 {item.expiryInfo.daysLeft} dagar kvar
                   </span>
                 )}
+
+                {!item.expiryInfo?.isExpiringSoon &&
+                  item.expiryInfo?.isWarning && (
+                    <span className="warning warning-warning">
+                      🟡 {item.expiryInfo.daysLeft} dagar kvar
+                    </span>
+                  )}
               </div>
 
               {editingId === item.id ? (
