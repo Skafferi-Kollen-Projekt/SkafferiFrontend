@@ -1,73 +1,64 @@
-# React + TypeScript + Vite
+# Skafferi Kollen – Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Detta repository innehåller **frontend** för projektet **Skafferi Kollen**.  
+Frontend är byggd med **React + TypeScript (Vite)** och körs **lokalt**.
 
-Currently, two official plugins are available:
+Frontend ansvarar för:
+- användargränssnitt
+- formulär (registrering, inloggning, profil)
+- visning och hantering av skafferi‑varor
+- kommunikation med backend via REST‑API
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## 🎨 Teknikstack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- React
+- TypeScript
+- Vite
+- Fetch API
+- CSS (responsiv design)
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 🚀 Köra frontend lokalt
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### 1️⃣ Installera dependencies
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+```bash
+npm install
+___________________________________
+2️⃣ Starta frontend:
+npm run dev
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Frontend körs på:
+http://localhost:5173
+___________________________________
+⚠️ Backend krävs
+För att frontend ska fungera måste backend köras lokalt samtidigt.
+Backend körs på:
+http://localhost:4000
+Frontend kommunicerar endast med backend‑API och aldrig direkt med databasen.
+___________________________________
+🔗 Backend
+Backend finns i ett separat repository:
+➡️ skafferi-backend
+___________________________________
+✅ Funktionalitet
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+✔ Visa data från backend
+✔ Skapa nya objekt via formulär
+✔ Uppdatera befintliga objekt
+✔ Radera objekt
+✔ Dynamiska UI‑uppdateringar utan sidladdning
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+✅ Status
+
+✔ Frontend fungerar lokalt
+✔ Full CRUD‑funktionalitet via backend
+✔ Klar för demonstration
+___________________________________
+
+
+
